@@ -13,7 +13,7 @@ folders:
     - map: ~/Code
       to: /home/vagrant/Code
       type: "nfs"
-      mount_opts: ['vers=3','tcp','async','rw','nolock','noatime','fsc']
+      mount_opts: ['vers=3','tcp','async','rw','nolock','noatime']
 
 # Add Here your sites
 sites:
@@ -33,10 +33,6 @@ sites:
       params: # this is optional
         - key: "DEV"
           value: "/var/www/vhosts/repository/framework/php"
-
-ports:
-    - send: 80
-      to: 80
 
 #databases:
 #    - homestead
