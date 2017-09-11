@@ -104,8 +104,8 @@ server {
 
     }
 
-    ssl_certificate     /etc/nginx/ssl/$filename.crt;
-    ssl_certificate_key /etc/nginx/ssl/$filename.key;
+    ssl_certificate     /etc/nginx/ssl/$1.crt; 
+    ssl_certificate_key /etc/nginx/ssl/$1.key;
 }
 
 "
