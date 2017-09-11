@@ -1,7 +1,7 @@
 ---
 ip: "192.168.10.10"
 memory: 2048
-cpus: 1
+cpus: 2
 provider: virtualbox
 
 authorize: ~/.ssh/id_rsa.pub
@@ -12,13 +12,34 @@ keys:
 folders:
     - map: ~/Code
       to: /home/vagrant/Code
+      type: "nfs"
+      mount_opts: ['vers=3','tcp','async','rw','nolock','noatime','fsc']
 
+# Add Here your sites
 sites:
     - map: homestead.app
       to: /home/vagrant/Code/public
+# FOR MAGENTO:
+   - map: www.example.com.vag
+      to: /home/vagrant/Code/example/public
+      type: magento # Or magento2 for magento 2 projects
+      php: "5.6" # Or 7.0
 
-databases:
-    - homestead
+# FOR IMPORO
+  - map: "*.imporo.com.vag"
+      to: /home/vagrant/Code/imporo/httpdocs
+      php: "5.6"
+      type: "imporo"
+      params: # this is optional
+        - key: "DEV"
+          value: "/var/www/vhosts/repository/framework/php"
+
+ports:
+    - send: 80
+      to: 80
+
+#databases:
+#    - homestead
 
 # blackfire:
 #     - id: foo
