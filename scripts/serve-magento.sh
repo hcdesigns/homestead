@@ -22,12 +22,11 @@ else
 fi
 
 php_version=$5
-if [[ $php_version == "7.1" ]]; then
-    echo "Magento 1 cannot use php 7.1"
+if [[ $php_version == "7.1" || $php_version == "7.2" ]]; then
+    echo "Magento 1 cannot use php 7.1 or 7.2"
     echo "Setting up php 5.6 for $domain"
     php_version="5.6"
 fi
-echo "Use php version $php_version"
 
 block="server {
     listen ${3:-80};
@@ -83,10 +82,8 @@ block="server {
 
 echo "$block" > "/etc/nginx/sites-available/$1"
 ln -fs "/etc/nginx/sites-available/$1" "/etc/nginx/sites-enabled/$1"
-echo "Magento 1 installation succeeded"
 
 cronfile=$1
 cronfile=${cronfile//[-._]/}
 cron_block="* * * * * vagrant /usr/bin/php$php_version $2/cron.php"
 echo "$cron_block" > "/etc/cron.d/mag${cronfile}"
-echo "Magento 1 cron installation succeeded"
