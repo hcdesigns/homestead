@@ -17,16 +17,11 @@ folders:
 
 # Add Here your sites
 sites:
-    - map: homestead.app
-      to: /home/vagrant/Code/public
-# FOR MAGENTO:
-   - map: www.example.com.vag
-      to: /home/vagrant/Code/example/public
-      type: magento # Or magento2 for magento 2 projects
-      php: "5.6" # Or 7.0
+    - map: homestead.test
+      to: /home/vagrant/code/public
 
 # FOR IMPORO
-  - map: "*.imporo.com.vag"
+    - map: "*.imporo.com.vag"
       to: /home/vagrant/Code/imporo/httpdocs
       php: "5.6"
       type: "imporo"
