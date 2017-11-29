@@ -17,13 +17,13 @@ sudo service php5.6-fpm restart
 echo "${opcache}" | sudo tee /etc/php/7.0/fpm/conf.d/10-opcache.ini > /dev/null
 sudo sed -i -e 's/;realpath_cache_size = .*/realpath_cache_size = 4M/g' /etc/php/7.0/fpm/php.ini
 sudo sed -i -e 's/;realpath_cache_ttl = .*/realpath_cache_ttl = 7200/g' /etc/php/7.0/fpm/php.ini
-sudo service php5.6-fpm restart
+sudo service php7.0-fpm restart
 
 
 echo "${opcache}" | sudo tee /etc/php/7.1/fpm/conf.d/10-opcache.ini > /dev/null
 sudo sed -i -e 's/;realpath_cache_size = .*/realpath_cache_size = 4M/g' /etc/php/7.1/fpm/php.ini
 sudo sed -i -e 's/;realpath_cache_ttl = .*/realpath_cache_ttl = 7200/g' /etc/php/7.1/fpm/php.ini
-sudo service php5.6-fpm restart
+sudo service php7.1-fpm restart
 
 echo "${opcache}" | sudo tee /etc/php/7.2/fpm/conf.d/10-opcache.ini > /dev/null
 sudo sed -i -e 's/;realpath_cache_size = .*/realpath_cache_size = 4M/g' /etc/php/7.2/fpm/php.ini

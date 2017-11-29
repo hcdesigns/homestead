@@ -42,8 +42,9 @@ block="server {
         $paramsTXT
 
         fastcgi_intercept_errors off;
-        fastcgi_buffer_size 16k;
-        fastcgi_buffers 4 16k;
+        fastcgi_buffer_size 256;
+        fastcgi_buffers 64 512k;
+        fastcgi_busy_buffers_size 512k;
     }
 
     # PROD
@@ -55,8 +56,9 @@ block="server {
         $paramsTXT
 
         fastcgi_intercept_errors off;
-        fastcgi_buffer_size 16k;
-        fastcgi_buffers 4 16k;
+        fastcgi_buffer_size 256k;
+        fastcgi_buffers 64 512k;
+        fastcgi_busy_buffers_size 512k;
         internal;
     }
 
