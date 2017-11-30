@@ -1,19 +1,48 @@
 #!/usr/bin/env bash
 export DEBIAN_FRONTEND=noninteractive
 
-if [ ! -f "/etc/php/5.6/mods-available/mcrypt.ini" ]; then
-	echo "Install php 5.6 mcrypt"
-	sudo apt-get install -y php5.6-mcrypt  > /dev/null 2>&1
+declare modules_needed=(
+	"mcrypt"
+	"soap"
+	"xml"
+	"curl"
+	"dom"
+	"gd"
+	"hash"
+	"iconv"
+	"pcre"
+	);
+
+declare php56modules=$(/usr/bin/php5.6 -m)
+declare php70modules=$(/usr/bin/php7.0 -m)
+declare php71modules=$(/usr/bin/php7.1 -m)
+declare php72modules=$(/usr/bin/php7.2 -m)
+
+for module in "${modules_needed[@]}"
+do
+	if [[ $php56modules != *"$module"* ]]; then
+		php56install="$php56install php5.6-${module}";
+	fi
+
+	if [[ $php70modules != *"$module"* ]]; then
+		php70install="$php70install php7.0-${module}";
+	fi
+
+	if [[ $php71modules != *"$module"* ]]; then
+		php71install="$php71install php7.1-${module}";
+	fi
+done
+
+if [[ ! -z $php56install ]]; then
+	sudo apt-get install -y $php56install > /dev/null 2>&1
 fi
 
-if [ ! -f "/etc/php/7.0/mods-available/mcrypt.ini" ]; then
-	echo "Install php 7.0 mcrypt"
-	sudo apt-get install -y php7.0-mcrypt  > /dev/null 2>&1
+if [[ ! -z $php70install ]]; then
+	sudo apt-get install -y $php70install > /dev/null 2>&1
 fi
 
-if [ ! -f "/etc/php/7.1/mods-available/mcrypt.ini" ]; then
-	echo "Install php 7.1 mcrypt"
-	sudo apt-get install -y php7.1-mcrypt  > /dev/null 2>&1
+if [[ ! -z $php71install ]]; then
+	sudo apt-get install -y $php71install > /dev/null 2>&1
 fi
 
 
