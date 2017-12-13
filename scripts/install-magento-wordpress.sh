@@ -33,6 +33,10 @@ do
 	fi
 done
 
+if [[ ! -z $php56modules ]] || [[ ! -z $php70install ]] || [[ ! -z $php71install ]]; then
+	sudo apt-get update > /dev/null 2>&1
+fi
+
 if [[ ! -z $php56install ]]; then
 	sudo apt-get install -y $php56install > /dev/null 2>&1
 fi
