@@ -42,6 +42,11 @@ class Homestead
             end
         end
 
+        # Override Default SSH port on the host
+        if (settings.has_key?("default_ssh_port"))
+            config.vm.network :forwarded_port, guest: 22, host: settings["default_ssh_port"], auto_correct: false, id: "ssh"
+        end
+
         # Configure A Few VMware Settings
         ["vmware_fusion", "vmware_workstation"].each do |vmware|
             config.vm.provider vmware do |v|
@@ -209,7 +214,7 @@ class Homestead
                         params += " )"
                     end
                     s.path = scriptDir + "/serve-#{type}.sh"
-                    s.args = [site["map"], site["to"], site["port"] ||= "80", site["ssl"] ||= "443", site["php"] ||= "7.1", params ||= ""]
+                    s.args = [site["map"], site["to"], site["port"] ||= "80", site["ssl"] ||= "443", site["php"] ||= "7.2", params ||= ""]
                 end
 
                 # Configure The Cron Schedule
@@ -233,6 +238,50 @@ class Homestead
                     end
                 end
             end
+        end
+
+        # Configure All Of The Server Environment Variables
+        config.vm.provision "shell" do |s|
+            s.name = "Clear Variables"
+            s.path = scriptDir + "/clear-variables.sh"
+        end
+
+        if settings.has_key?("variables")
+            settings["variables"].each do |var|
+                config.vm.provision "shell" do |s|
+                    s.inline = "echo \"\nenv[$1] = '$2'\" >> /etc/php/5.6/fpm/pool.d/www.conf"
+                    s.args = [var["key"], var["value"]]
+                end
+
+                config.vm.provision "shell" do |s|
+                    s.inline = "echo \"\nenv[$1] = '$2'\" >> /etc/php/7.0/fpm/pool.d/www.conf"
+                    s.args = [var["key"], var["value"]]
+                end
+
+                config.vm.provision "shell" do |s|
+                    s.inline = "echo \"\nenv[$1] = '$2'\" >> /etc/php/7.1/fpm/pool.d/www.conf"
+                    s.args = [var["key"], var["value"]]
+                end
+
+                config.vm.provision "shell" do |s|
+                    s.inline = "echo \"\nenv[$1] = '$2'\" >> /etc/php/7.2/fpm/pool.d/www.conf"
+                    s.args = [var["key"], var["value"]]
+                end
+
+                config.vm.provision "shell" do |s|
+                    s.inline = "echo \"\n# Set Homestead Environment Variable\nexport $1=$2\" >> /home/vagrant/.profile"
+                    s.args = [var["key"], var["value"]]
+                end
+            end
+
+            config.vm.provision "shell" do |s|
+                s.inline = "service php5.6-fpm restart; service php7.0-fpm restart; service php7.1-fpm restart; service php7.2-fpm restart;"
+            end
+        end
+
+        config.vm.provision "shell" do |s|
+            s.name = "Restarting Cron"
+            s.inline = "sudo service cron restart"
         end
 
         config.vm.provision "shell" do |s|
@@ -308,45 +357,6 @@ class Homestead
                         s.args = [db]
                     end
                 end
-            end
-        end
-
-        # Configure All Of The Server Environment Variables
-        config.vm.provision "shell" do |s|
-            s.name = "Clear Variables"
-            s.path = scriptDir + "/clear-variables.sh"
-        end
-
-        if settings.has_key?("variables")
-            settings["variables"].each do |var|
-                config.vm.provision "shell" do |s|
-                    s.inline = "echo \"\nenv[$1] = '$2'\" >> /etc/php/5.6/fpm/pool.d/www.conf"
-                    s.args = [var["key"], var["value"]]
-                end
-
-                config.vm.provision "shell" do |s|
-                    s.inline = "echo \"\nenv[$1] = '$2'\" >> /etc/php/7.0/fpm/pool.d/www.conf"
-                    s.args = [var["key"], var["value"]]
-                end
-
-                config.vm.provision "shell" do |s|
-                    s.inline = "echo \"\nenv[$1] = '$2'\" >> /etc/php/7.1/fpm/pool.d/www.conf"
-                    s.args = [var["key"], var["value"]]
-                end
-
-                config.vm.provision "shell" do |s|
-                    s.inline = "echo \"\nenv[$1] = '$2'\" >> /etc/php/7.2/fpm/pool.d/www.conf"
-                    s.args = [var["key"], var["value"]]
-                end
-
-                config.vm.provision "shell" do |s|
-                    s.inline = "echo \"\n# Set Homestead Environment Variable\nexport $1=$2\" >> /home/vagrant/.profile"
-                    s.args = [var["key"], var["value"]]
-                end
-            end
-
-            config.vm.provision "shell" do |s|
-                s.inline = "service php5.6-fpm restart; service php7.0-fpm restart; service php7.1-fpm restart; service php7.2-fpm restart;"
             end
         end
 
