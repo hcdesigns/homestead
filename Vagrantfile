@@ -17,6 +17,12 @@ require File.expand_path(File.dirname(__FILE__) + '/scripts/homestead.rb')
 Vagrant.require_version '>= 1.9.0'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+    require 'time'
+        offset = ((Time.zone_offset(Time.now.zone) / 60) / 60)
+        timezone_suffix = offset >= 0 ? "-#{offset.to_s}" : "+#{offset.to_s}"
+        timezone = 'Etc/GMT' + timezone_suffix
+        config.vm.provision :shell, :inline => "sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/" + timezone + " /etc/localtime", run: "always"
+    
     if File.exist? aliasesPath then
         config.vm.provision "file", source: aliasesPath, destination: "/tmp/bash_aliases"
         config.vm.provision "shell" do |s|
