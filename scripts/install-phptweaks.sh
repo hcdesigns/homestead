@@ -29,9 +29,3 @@ echo "${opcache}" | sudo tee /etc/php/7.2/fpm/conf.d/10-opcache.ini > /dev/null
 sudo sed -i -e 's/;realpath_cache_size = .*/realpath_cache_size = 4M/g' /etc/php/7.2/fpm/php.ini
 sudo sed -i -e 's/;realpath_cache_ttl = .*/realpath_cache_ttl = 7200/g' /etc/php/7.2/fpm/php.ini
 sudo service php7.2-fpm restart
-
-if [ ! -f "/etc/default/cachefilesd" ]; then
-    export DEBIAN_FRONTEND=noninteractive
-	sudo apt-get install -y cachefilesd > /dev/null 2>&1
-	sudo sed -i -e 's/#RUN=.*/RUN=YES/g' /etc/default/cachefilesd
-fi
