@@ -35,20 +35,18 @@ done
 
 if [[ ! -z $php56modules ]] || [[ ! -z $php70install ]] || [[ ! -z $php71install ]]; then
 	sudo apt-get update > /dev/null 2>&1
-fi
+	if [[ ! -z $php56install ]]; then
+		sudo apt-get install -y $php56install  > /dev/null 2>&1
+	fi
 
-if [[ ! -z $php56install ]]; then
-	sudo apt-get install -y $php56install > /dev/null 2>&1
-fi
+	if [[ ! -z $php70install ]]; then
+		sudo apt-get install -y $php70install > /dev/null 2>&1
+	fi
 
-if [[ ! -z $php70install ]]; then
-	sudo apt-get install -y $php70install > /dev/null 2>&1
+	if [[ ! -z $php71install ]]; then
+		sudo apt-get install -y $php71install > /dev/null 2>&1
+	fi
 fi
-
-if [[ ! -z $php71install ]]; then
-	sudo apt-get install -y $php71install > /dev/null 2>&1
-fi
-
 
 if [ ! -f "/usr/local/bin/magerun" ]; then
 	echo "Installing magerun"
@@ -64,12 +62,4 @@ if [ ! -f "/usr/local/bin/magerun2" ]; then
 	chmod +x ./n98-magerun2.phar
 	sudo mv ./n98-magerun2.phar /usr/local/bin/magerun2
 	echo "Magerun voor magento 2 installed"
-fi
-
-if [ ! -f "/usr/local/bin/wp" ]; then
-	echo "Installing WP-CLI"
-	curl -O -s https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /dev/null 2>&1
-	chmod +x wp-cli.phar
-	sudo mv wp-cli.phar /usr/local/bin/wp
-	echo "WP-CLI Installed"
 fi

@@ -250,9 +250,9 @@ server {
 echo "$block" > "/etc/nginx/sites-available/$1"
 ln -fs "/etc/nginx/sites-available/$1" "/etc/nginx/sites-enabled/$1"
 
-cron_block="* * * * * vagrant /usr/bin/php$php_version $2/bin/magento cron:run | grep -v \"Ran jobs by schedule\" >> $2/var/log/magento.cron.log
-* * * * * vagrant /usr/bin/php$php_version $2/bin/magento setup:cron:run >> $2/var/log/setup.cron.log
-* * * * * vagrant /usr/bin/php$php_version $2/update/cron.php >> $2/var/log/update.cron.log"
-cronfile=$1
-cronfile=${cronfile//[-._]/}
-echo "$cron_block" > "/etc/cron.d/mag${cronfile}"
+#cron_block="* * * * * vagrant /usr/bin/php$php_version $2/bin/magento cron:run | grep -v \"Ran jobs by schedule\" >> $2/var/log/magento.cron.log
+#* * * * * vagrant /usr/bin/php$php_version $2/bin/magento setup:cron:run >> $2/var/log/setup.cron.log
+#* * * * * vagrant /usr/bin/php$php_version $2/update/cron.php >> $2/var/log/update.cron.log"
+#cronfile=$1
+#cronfile=${cronfile//[-._]/}
+#echo "$cron_block" > "/etc/cron.d/mag${cronfile}"
