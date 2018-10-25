@@ -186,6 +186,11 @@ class Homestead
         end
 
         config.vm.provision "shell" do |s|
+            s.name = "Install Magento settings"
+            s.path = scriptDir + "/install-magento-wordpress.sh"
+        end
+
+        config.vm.provision "shell" do |s|
             s.name = "Install Magento 2 backstreams"
             s.path = scriptDir + "/install-magento2-streams.sh"
         end
@@ -320,10 +325,7 @@ class Homestead
             s.inline = "sudo service nginx restart; sudo service php5.6-fpm restart; sudo service php7.0-fpm restart; sudo service php7.1-fpm restart; sudo service php7.2-fpm restart"
         end
 
-        config.vm.provision "shell" do |s|
-            s.name = "Install Magento settings"
-            s.path = scriptDir + "/install-magento-wordpress.sh"
-        end
+        
 
         config.vm.provision "shell" do |s|
             s.name = "Tweak PHP settings"

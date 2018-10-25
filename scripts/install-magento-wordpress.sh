@@ -28,13 +28,18 @@ do
 		php70install="$php70install php7.0-${module}";
 	fi
 
-	if [[ $php71modules != *"$module"* ]]; then
-		php71install="$php71install php7.1-${module}";
-	fi
-done
+	# if [[ $php71modules != *"$module"* ]]; then
+	# 	php71install="$php71install php7.1-${module}";
+	# fi
 
-if [[ ! -z $php56modules ]] || [[ ! -z $php70install ]] || [[ ! -z $php71install ]]; then
-	sudo apt-get update > /dev/null 2>&1
+	# if [[ $php72modules != *"$module"* ]]; then
+	# 	php72install="$php72install php7.2-${module}";
+	# fi
+done
+ # || [[ ! -z $php71install ]] || [[ ! -z $php72install ]]
+if [[ ! -z $php56install ]] || [[ ! -z $php70install ]]; then
+	sudo apt-get update
+	# > /dev/null 2>&1
 	if [[ ! -z $php56install ]]; then
 		sudo apt-get install -y $php56install  > /dev/null 2>&1
 	fi
@@ -43,9 +48,11 @@ if [[ ! -z $php56modules ]] || [[ ! -z $php70install ]] || [[ ! -z $php71install
 		sudo apt-get install -y $php70install > /dev/null 2>&1
 	fi
 
-	if [[ ! -z $php71install ]]; then
-		sudo apt-get install -y $php71install > /dev/null 2>&1
-	fi
+	# if [[ ! -z $php71install ]]; then
+	# 	echo "INSTALL PHP 7.1"
+	# 	sudo apt-get install -y $php71install
+	# 	# > /dev/null 2>&1
+	# fi
 fi
 
 if [ ! -f "/usr/local/bin/magerun" ]; then

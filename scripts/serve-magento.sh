@@ -84,7 +84,7 @@ block="server {
 echo "$block" > "/etc/nginx/sites-available/$1"
 ln -fs "/etc/nginx/sites-available/$1" "/etc/nginx/sites-enabled/$1"
 
-cronfile=$1
-cronfile=${cronfile//[-._]/}
-cron_block="*/10 * * * * vagrant /usr/bin/php$php_version $2/cron.php"
-echo "$cron_block" > "/etc/cron.d/mag${cronfile}"
+#cronfile=$1
+#cronfile=${cronfile//[-._]/}
+#cron_block="*/10 * * * * vagrant /usr/bin/php$php_version $2/cron.php"
+#echo "$cron_block" > "/etc/cron.d/mag${cronfile}"
