@@ -22,11 +22,11 @@ else
 fi
 
 php_version=$5
-if [[ $php_version == "7.1" || $php_version == "7.2" ]]; then
-    echo "Magento 1 cannot use php 7.1 or 7.2"
-    echo "Setting up php 5.6 for $domain"
-    php_version="5.6"
-fi
+# if [[ $php_version == "7.1" || $php_version == "7.2" ]]; then
+#     echo "Magento 1 cannot use php 7.1 or 7.2"
+#     echo "Setting up php 5.6 for $domain"
+#     php_version="5.6"
+# fi
 
 block="server {
     listen ${3:-80};

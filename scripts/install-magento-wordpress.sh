@@ -38,14 +38,13 @@ do
 done
  # || [[ ! -z $php71install ]] || [[ ! -z $php72install ]]
 if [[ ! -z $php56install ]] || [[ ! -z $php70install ]]; then
-	sudo apt-get update
-	# > /dev/null 2>&1
+	sudo apt-get -qq update > /dev/null 2>&1
 	if [[ ! -z $php56install ]]; then
-		sudo apt-get install -y $php56install  > /dev/null 2>&1
+		sudo apt-get -qq install -y $php56install  > /dev/null 2>&1
 	fi
 
 	if [[ ! -z $php70install ]]; then
-		sudo apt-get install -y $php70install > /dev/null 2>&1
+		sudo apt-get -qq install -y $php70install > /dev/null 2>&1
 	fi
 
 	# if [[ ! -z $php71install ]]; then
