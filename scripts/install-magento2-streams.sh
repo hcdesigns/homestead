@@ -18,9 +18,8 @@ then
     }
 
     upstream fastcgi_backend_7.2 {
-    # NOT IN USE BY MAGENTO 2.2!
     # socket
-        server unix:/var/run/php/php7.0-fpm.sock;
+        server unix:/var/run/php/php7.2-fpm.sock;
     }
     "
 

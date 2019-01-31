@@ -42,10 +42,10 @@ else
 fi
 
 php_version=$5
-if [[ $php_version == "7.2" ]]; then
-    echo "Magento 2 cannot use php 7.2"
-    echo "Setting up php 5.6 for $domain"
-    php_version="7.1"
+if [[ $php_version == "7.3" ]]; then
+    echo "Magento 2 cannot use php 7.3"
+    echo "Setting up php 7.2 for $domain"
+    php_version="7.2"
 fi
 echo "Use php version $php_version"
 
@@ -65,6 +65,7 @@ server {
     access_log off;
     error_log  /var/log/nginx/$1-error.log error;
 
+    
     ssl_certificate     /etc/nginx/ssl/$1.crt;
     ssl_certificate_key /etc/nginx/ssl/$1.key;
 

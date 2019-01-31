@@ -206,6 +206,15 @@ class Homestead
     config.vm.provision 'shell' do |s|
       s.path = script_dir + '/clear-nginx.sh'
     end
+    config.vm.provision "shell" do |s|
+                s.name = "Install Magento settings"
+                s.path = script_dir + "/install-magento-wordpress.sh"
+            end
+
+            config.vm.provision "shell" do |s|
+                s.name = "Install Magento 2 backstreams"
+                s.path = script_dir + "/install-magento2-streams.sh"
+            end
 
     if settings.include? 'sites'
       socket = { 'map' => 'socket-wrench.test', 'to' => '/var/www/socket-wrench/public' }
@@ -291,15 +300,7 @@ class Homestead
           config.vm.provision 'shell' do |s|
             s.name = 'Creating Schedule'
 
-            config.vm.provision "shell" do |s|
-                s.name = "Install Magento settings"
-                s.path = scriptDir + "/install-magento-wordpress.sh"
-            end
 
-            config.vm.provision "shell" do |s|
-                s.name = "Install Magento 2 backstreams"
-                s.path = scriptDir + "/install-magento2-streams.sh"
-            end
 
             if site['schedule']
               s.path = script_dir + '/cron-schedule.sh'
